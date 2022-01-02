@@ -192,3 +192,47 @@ Seventh, set the routing phone numbers. Under the phone number, I set the contac
 ---
 
 - Step 4: Lambda and DynamnoDB integration
+
+First, I created a dynamoDB table to store caller info.
+
+The table’s name is cus-phone-vanity-number.
+
+And for the table’s items, I added
+phone(string);
+companyName(string);
+vanityNumber(string);
+
+Second, created an role in IAM for the lambda function to have read and write access to this DynamoDB table
+
+Created a role name: Lambda-DynamoDB
+Policy: AWSLambdaBasicExecutionRole
+
+Then added inline policy to the role, to give read/write access to the DynamoDB function.
+Under resource, the ARN of the newly created DynamoDB table was added here. So the Lambda function would have access to this particular table
+
+![lambda-dynamodb-1](images/lambda-dynamodb1.png)
+
+![lambda-dynamodb-2](images/lambda-dynamodb2.png)
+
+Third, created the Lambda function.
+
+First of all, I created the function to convert a phone number to vanity number based on company's name (for best vanity number option), then to record the result on the DynamoDB table. Based on the vanity number converting rules, if the phone number last 7 digits could not be convert to letter closed to its company name, then random letter would be converted instead.
+
+The function name is recordVanityNumber, which was assigned to the role of read/write to the DynamoDB table.
+
+![lambda-dynamodb-3](images/lambda-dynamodb3.png)
+
+For the function, the client's phone number, company name were given as string. The vanity number would be created by the lambda function. And all three key/value pairs would be recorded to the DynamoDB table. The funtion would check the last 7 digits of the phone number against the company name first for BEST vanity number option. If the condition is not met, then random letter would be assigned to create the vanity number. After the function is created, the test event was created and the test was successful. The DynamoDB table successfully recorded the new entry and newly created vanity number.
+
+![lambda-dynamodb-4](images/lambda-dynamodb4.png)
+
+![lambda-dynamodb-5](images/lambda-dynamodb5.png)
+
+![lambda-dynamodb-6](images/lambda-dynamodb6.png)
+
+![lambda-dynamodb-7](images/lambda-dynamodb7.gif)
+
+
+Please see the Github repo for the function detail. The five best vanity numbers were recorded and were shown below:
+
+![lambda-dynamodb-8](images/lambda-dynamodb8.png)
