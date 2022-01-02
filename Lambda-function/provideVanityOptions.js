@@ -1,34 +1,34 @@
-'use strict';
-const AWS = require('aws-sdk');
 
-AWS.config.update({ region: 'us-west-2' });
+exports.handler = async (event) => {
 
-exports.handler = async (event, context) => {
-  const ddb = new AWS.DynamoDB({ apiVersion: '2012-10-08' });
-  const documentClient = new AWS.DynamoDB.DocumentClient({ region: 'us-west-2' });
+  const number = event['Details']['ContactData']['CustomerEndpoint']['Address']
 
-  const phoneNumber = '+18882228453';
-  const companyName = 'AABUILD';
-  const vanityNumber = convertVanity(phoneNumber, companyName);
-  const params = {
-    TableName: 'cus-phone-vanity-number',
-    Item: {
-      phone: phoneNumber,
-      companyName: companyName,
-      vanityNumber: vanityNumber
-    }
+  const result= vanityOptions(3, number );
+
+  const response = {
+    statusCode: 200,
+    body: result
   };
-
-  try {
-    const data = await documentClient.put(params).promise();
-    console.log(data);
-  } catch (err) {
-    console.log(err);
-  }
-
+  return response;
 };
 
-const convertVanity = (number, callerId = "$") => {
+
+const vanityOptions = ( optionsCount,number, callerId="$")=> {
+  const result={};
+   result.options=[];
+   result.status= false;
+
+  for (let i = 0; i < optionsCount;i++){
+    if (convertVanity(number, callerId)){
+    result.options.push(convertVanity(number, callerId));
+    result.status = true;
+  }
+}
+
+  return result;
+}
+
+const convertVanity = (number, callerId="$") => {
 
   const lastSeven = number.slice(5).split('');
 
