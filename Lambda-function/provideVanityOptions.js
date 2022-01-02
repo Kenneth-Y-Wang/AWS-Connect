@@ -2,30 +2,30 @@
 exports.handler = async (event) => {
 
   const number = event['Details']['ContactData']['CustomerEndpoint']['Address']
-  // const number= "+19499819686"   for testing, I used a specific phone number
-  const result= vanityOptions(3, number )
+
+  const result= vanityOptions(3, number );
 
   const response = {
     statusCode: 200,
-    body: JSON.stringify(result),
+    body: result
   };
   return response;
 };
 
 
 const vanityOptions = ( optionsCount,number, callerId="$")=> {
-  let result={};
+  const result={};
    result.options=[];
    result.status= false;
 
   for (let i = 0; i < optionsCount;i++){
     if (convertVanity(number, callerId)){
-    result.options.push(convertVanity(number, callerId))
+    result.options.push(convertVanity(number, callerId));
     result.status = true;
   }
 }
 
-  return result
+  return result;
 }
 
 const convertVanity = (number, callerId="$") => {
