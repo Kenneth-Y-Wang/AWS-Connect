@@ -406,20 +406,20 @@ My third challenge for this project was to configure AWS Connect and Lambda func
 ### Additional project development if time allowed
 
 
-- Quality and reporting
+1. Quality and reporting
 
-1. Enable call recording and playback. The ‘Set call recording behavior’ can be added to the contact flow to record BOTH agent and customer. Calls that are recorded by Connect are saved in Amazon S3. The call can the played back from Contact search as well.
-2. Real-time reporting for each queue’s performance metrics. The dashboard can also be saved for further performance analysis.
-3. Historical report are heavily used within contact centers. With AWS connect, we get the ability to create and schedule historical report, with data going back 24 months. The historical reports can be accessed via the Metrics and quality menu. The Phone number reports can also be accessed.
+- Enable call recording and playback. The ‘Set call recording behavior’ can be added to the contact flow to record BOTH agent and customer. Calls that are recorded by Connect are saved in Amazon S3. The call can the played back from Contact search as well.
+- Real-time reporting for each queue’s performance metrics. The dashboard can also be saved for further performance analysis.
+- Historical report are heavily used within contact centers. With AWS connect, we get the ability to create and schedule historical report, with data going back 24 months. The historical reports can be accessed via the Metrics and quality menu. The Phone number reports can also be accessed.
 
 
-- Create and configure Amazon Lex.
+2. Create and configure Amazon Lex.
 
 
 Amazon Lex is a service for building conversational interfaces using automatic speech recognition and natural language understanding to understand the caller’s intent. With Lex, the caller can talk to perform task and choose options. Then the Lex bot can replace the customer input action block in the main menu.
 
 
-- Use amazon poly for more customized voice prompt. ( voice from different character or gender, different language, and different pronunciation with the help of SSML tags)
+3. Use amazon poly for more customized voice prompt. ( voice from different character or gender, different language, and different pronunciation with the help of SSML tags)
 
 
 ---
